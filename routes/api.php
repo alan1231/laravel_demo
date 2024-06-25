@@ -8,5 +8,5 @@ Route::get('/flavors', [ApiController::class, 'listFlavors']);
 
 // 定義 createFlavor 路由，對應到 createFlavor 方法
 Route::post('/flavors', [ApiController::class, 'createFlavor']);
-
+// 使用 POST 方法來處理刪除請求
 Route::post('/flavors/delete', [ApiController::class, 'deleteFlavor']);
