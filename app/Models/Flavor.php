@@ -9,5 +9,5 @@ class Flavor extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'price', 'image','image_path'];
 }

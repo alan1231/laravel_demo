@@ -10,7 +10,7 @@ class ApiController extends Controller
     public function listFlavors(Request $request)
     {
         // 從數據庫中獲取所有 Flavor 模型實例，僅選擇 id, name 和 description 字段
-        $flavors = Flavor::all(['id', 'name', 'description']);
+        $flavors = Flavor::all(['id', 'name', 'description' , 'price']);
 
         // 將 description 為 null 的字段替換為空字符串
         $flavors = $flavors->map(function($flavor) {
@@ -30,6 +30,7 @@ class ApiController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
         ]);
 
         // 創建新的 Flavor 實例

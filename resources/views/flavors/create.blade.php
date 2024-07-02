@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <form action="{{ route('flavors.store') }}" method="POST" class="bg-white p-6 rounded shadow-md">
+    <form action="{{ route('flavors.store') }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded shadow-md">
         @csrf
         <div class="mb-4">
             <label for="name" class="block text-gray-700">Name:</label>
@@ -22,6 +22,14 @@
         <div class="mb-4">
             <label for="description" class="block text-gray-700">Description:</label>
             <textarea name="description" id="description" class="border border-gray-300 rounded p-2 w-full"></textarea>
+        </div>
+        <div class="mb-4">
+            <label for="price" class="block text-gray-700">Price:</label>
+            <input type="number" step="0.01" name="price" id="price" class="border border-gray-300 rounded p-2 w-full" required>
+        </div>
+        <div class="mb-4">
+            <label for="image" class="block text-gray-700">Image:</label>
+            <input type="file" name="image" id="image">
         </div>
         <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">Add Flavor</button>
     </form>

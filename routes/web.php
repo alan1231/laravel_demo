@@ -7,3 +7,5 @@ Route::get('/', function () {
 });
 
 Route::resource('flavors', FlavorController::class);
+Route::get('flavors/{id}/upload-image', [FlavorController::class, 'showUploadImageForm'])->name('flavors.showUploadImageForm');
+Route::post('flavors/{id}/upload-image', [FlavorController::class, 'uploadImage'])->name('flavors.uploadImage');
