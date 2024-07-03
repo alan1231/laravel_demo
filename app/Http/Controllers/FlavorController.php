@@ -111,4 +111,43 @@ class FlavorController extends Controller
         return redirect()->route('flavors.index')->with('success', 'Flavor deleted successfully');
     }
 
+    public function editImageForm($id)
+    {
+        $flavor = Flavor::findOrFail($id);
+        return view('flavors.edit_image', compact('flavor'));
+    }
+
+    public function updateImage(Request $request, $id)
+    {
+        // 验证上传的图片
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240', // 10MB
+        ]);
+
+        try {
+            // 查找ID对应的Flavor
+            $flavor = Flavor::findOrFail($id);
+
+            // 删除旧的图片文件
+            if ($flavor->image_path) {
+                Storage::disk('public')->delete($flavor->image_path);
+            }
+
+            // 获取上传的文件
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->extension();
+            // 将图片保存到存储文件夹
+            $imagePath = $image->storeAs('images', $imageName, 'public');
+
+            // 更新图片路径到数据库
+            $flavor->image_path = $imagePath;
+            $flavor->save();
+
+            return redirect()->route('flavors.index')->with('success', 'Image updated successfully');
+        } catch (\Exception $e) {
+            Log::error('Error updating image for flavor: ' . $e->getMessage());
+            return back()->with('error', 'Failed to update image. Please try again.');
+        }
+    }
+
 }
