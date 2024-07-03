@@ -41,7 +41,7 @@ class FlavorController extends Controller
             if ($request->hasFile('image')) {
                 Log::info('Image file received'); // 记录日志
                 $image = $request->file('image');
-                $imageName = time().'.'.$image->extension();
+                $imageName = time() . '.' . $image->extension();
                 // 将图片保存到存储文件夹
                 $imagePath = $image->storeAs('images', $imageName, 'public');
                 Log::info('Image stored at: ' . $imagePath); // 记录日志
@@ -88,7 +88,7 @@ class FlavorController extends Controller
 
             // 获取上传的文件
             $image = $request->file('image');
-            $imageName = time().'.'.$image->extension();
+            $imageName = time() . '.' . $image->extension();
             // 将图片保存到存储文件夹
             $imagePath = $image->storeAs('images', $imageName, 'public');
 
@@ -102,4 +102,13 @@ class FlavorController extends Controller
             return back()->with('error', 'Failed to upload image. Please try again.');
         }
     }
+
+    public function destroy($id)
+    {
+        $flavor = Flavor::findOrFail($id);
+        $flavor->delete();
+
+        return redirect()->route('flavors.index')->with('success', 'Flavor deleted successfully');
+    }
+
 }

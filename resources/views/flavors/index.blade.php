@@ -22,8 +22,17 @@
                 <img src="{{ asset('storage/' . $flavor->image_path) }}" alt="{{ $flavor->name }}" class="mt-2 mb-2">
             @else
                 <p>No image available</p>
-                <a href="{{ route('flavors.showUploadImageForm', $flavor->id) }}" class="text-blue-500 underline">Upload Image</a>
+                <a href="{{ route('flavors.showUploadImageForm', $flavor->id) }}" class="text-blue-500 underline">Upload
+                    Image</a>
             @endif
+
+            <!-- 添加刪除按鈕 -->
+            <form action="{{ route('flavors.destroy', $flavor->id) }}" method="POST"
+                onsubmit="return confirm('Are you sure you want to delete this flavor?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="text-red-500 underline">Delete</button>
+            </form>
         </div>
     @endforeach
 </ul>
